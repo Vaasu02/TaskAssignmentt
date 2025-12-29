@@ -4,6 +4,7 @@ import API from '../services/api';
 import Navbar from '../components/Layout/Navbar';
 import Button from '../components/UI/Button';
 import Card from '../components/UI/Card';
+import ConfirmDialog from '../components/UI/ConfirmDialog';
 import { ArrowLeft, Calendar, Trash2, Edit } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -11,6 +12,7 @@ const TaskDetailsPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [task, setTask] = useState(null);
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
     useEffect(() => {
         API.get(`/tasks/${id}`)
@@ -19,14 +21,12 @@ const TaskDetailsPage = () => {
     }, [id, navigate]);
 
     const handleDelete = async () => {
-        if (window.confirm('Are you sure you want to delete this task?')) {
-            try {
-                await API.delete(`/tasks/${id}`);
-                toast.success('Task deleted');
-                navigate('/');
-            } catch (error) {
-                toast.error('Could not delete');
-            }
+        try {
+            await API.delete(`/tasks/${id}`);
+            toast.success('Task deleted');
+            navigate('/');
+        } catch (error) {
+            toast.error('Could not delete');
         }
     };
 
@@ -67,12 +67,20 @@ const TaskDetailsPage = () => {
                                 <Edit size={20} /> Edit Task
                             </Button>
                         </Link>
-                        <Button variant="danger" onClick={handleDelete} className="flex-1 flex justify-center items-center gap-2">
+                        <Button variant="danger" onClick={() => setShowDeleteConfirm(true)} className="flex-1 flex justify-center items-center gap-2">
                             <Trash2 size={20} /> Delete
                         </Button>
                     </div>
                 </Card>
             </div>
+
+            <ConfirmDialog
+                isOpen={showDeleteConfirm}
+                onClose={() => setShowDeleteConfirm(false)}
+                onConfirm={handleDelete}
+                title="Delete Task?"
+                message="This action cannot be undone. Are you sure you want to proceed?"
+            />
         </div>
     );
 };
