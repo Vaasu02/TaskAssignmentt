@@ -3,19 +3,17 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const connectDB = require('./config/db');
 
-// Load env vars
+
 dotenv.config();
 
-// Connect to Database
 connectDB();
 
 const app = express();
 
-// Middleware
 app.use(express.json());
 app.use(cors());
 
-// Basic Route
+
 app.get('/', (req, res) => {
     res.send('API is running...');
 });

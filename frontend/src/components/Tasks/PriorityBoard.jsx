@@ -24,7 +24,7 @@ const PriorityBoard = () => {
 
         const newPriority = destination.droppableId;
 
-        // Optimistic Update
+        
         updateTaskPriority(draggableId, newPriority);
     };
 

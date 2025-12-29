@@ -12,20 +12,19 @@ import toast from 'react-hot-toast';
 const TaskForm = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const { user } = useContext(AuthContext); // Get current user
+    const { user } = useContext(AuthContext); 
     const isEdit = !!id;
 
-    const [users, setUsers] = useState([]); // List of users for dropdown
+    const [users, setUsers] = useState([]); 
     const [formData, setFormData] = useState({
         title: '',
         description: '',
         dueDate: '',
         priority: 'Medium',
-        assignedTo: '' // New field
+        assignedTo: '' 
     });
 
     useEffect(() => {
-        // Fetch users if admin
         if (user?.role === 'admin') {
             API.get('/users')
                 .then(res => setUsers(res.data))

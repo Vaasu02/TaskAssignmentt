@@ -1,9 +1,6 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 
-// @desc    Get all users
-// @route   GET /api/users
-// @access  Private (Admin)
 const getUsers = async (req, res) => {
     try {
         const users = await User.find({}).select('-password');
@@ -13,9 +10,7 @@ const getUsers = async (req, res) => {
     }
 };
 
-// @desc    Create new user (Admin)
-// @route   POST /api/users
-// @access  Private (Admin)
+
 const createUser = async (req, res) => {
     const { username, email, password, role } = req.body;
 
@@ -50,9 +45,7 @@ const createUser = async (req, res) => {
     }
 };
 
-// @desc    Delete user
-// @route   DELETE /api/users/:id
-// @access  Private (Admin)
+
 const deleteUser = async (req, res) => {
     try {
         const user = await User.findById(req.params.id);

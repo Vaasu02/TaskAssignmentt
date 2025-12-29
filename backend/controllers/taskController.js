@@ -1,15 +1,12 @@
 const Task = require('../models/Task');
 
-// @desc    Get tasks with pagination
-// @route   GET /api/tasks
-// @access  Private
+
 const getTasks = async (req, res) => {
     try {
         const pageSize = Number(req.query.limit) || 10;
         const page = Number(req.query.page) || 1;
 
-        // Filter: Admin can see all, User sees assigned.
-        // Or if query 'assignedTo' is present, filter by that.
+        
         let query = {};
 
         if (req.user.role !== 'admin') {
@@ -34,9 +31,7 @@ const getTasks = async (req, res) => {
     }
 };
 
-// @desc    Get single task
-// @route   GET /api/tasks/:id
-// @access  Private
+
 const getTask = async (req, res) => {
     try {
         const task = await Task.findById(req.params.id).populate('assignedTo', 'username');
@@ -56,9 +51,7 @@ const getTask = async (req, res) => {
     }
 };
 
-// @desc    Create new task
-// @route   POST /api/tasks
-// @access  Private
+
 const createTask = async (req, res) => {
     try {
         const { title, description, dueDate, priority, assignedTo } = req.body;
@@ -67,12 +60,6 @@ const createTask = async (req, res) => {
             return res.status(400).json({ message: 'Please add all required fields' });
         }
 
-        // Logic: Who is this assigned to?
-        // If Admin: can assign to anyone (passed in body).
-        // If User: only to self? Or maybe users can assign to themselves.
-        // Default to self if not provided or if not admin?
-        // Requirement says "assign tasks to the user", implies Admin assigns.
-        // Let's allow users to create tasks for themselves.
 
         let assignee = req.user.id;
         if (req.user.role === 'admin' && assignedTo) {
@@ -94,9 +81,7 @@ const createTask = async (req, res) => {
     }
 };
 
-// @desc    Update task
-// @route   PUT /api/tasks/:id
-// @access  Private
+
 const updateTask = async (req, res) => {
     try {
         const task = await Task.findById(req.params.id);
@@ -113,7 +98,7 @@ const updateTask = async (req, res) => {
         const updatedTask = await Task.findByIdAndUpdate(
             req.params.id,
             req.body,
-            { new: true } // Return new
+            { new: true } 
         );
 
         res.json(updatedTask);
@@ -122,9 +107,7 @@ const updateTask = async (req, res) => {
     }
 };
 
-// @desc    Delete task
-// @route   DELETE /api/tasks/:id
-// @access  Private
+
 const deleteTask = async (req, res) => {
     try {
         const task = await Task.findById(req.params.id);
@@ -133,7 +116,7 @@ const deleteTask = async (req, res) => {
             return res.status(404).json({ message: 'Task not found' });
         }
 
-        // Check access
+        
         if (req.user.role !== 'admin' && task.assignedTo.toString() !== req.user.id) {
             return res.status(401).json({ message: 'Not authorized' });
         }

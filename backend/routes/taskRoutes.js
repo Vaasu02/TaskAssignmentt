@@ -9,7 +9,7 @@ const {
 } = require('../controllers/taskController');
 const { protect } = require('../middleware/authMiddleware');
 
-router.use(protect); // All routes protected
+router.use(protect); 
 
 router.route('/')
     .get(getTasks)
