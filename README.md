@@ -1,16 +1,85 @@
-# React + Vite
+# Task Master - MERN Stack Task Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to **Task Master**! This is a full-stack Task Management application built using the **MERN (MongoDB, Express, React, Node.js)** stack. It features a bold **Neo-Brutalism** design aesthetic and robust functionality for managing tasks, users, and priorities.
 
-Currently, two official plugins are available:
+## 🚀 Key Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+*   **Authentication & Authorization**: Secure JWT-based login and registration.
+*   **Role-Based Access Control (RBAC)**:
+    *   **Users**: Can manage their own assigned tasks.
+    *   **Admins**: Can manage all users, create tasks for specific users, and view system-wide data.
+*   **Task Management**:
+    *   Create, Read, Update, Delete (CRUD) tasks.
+    *   Pagination support (via AJAX logic).
+    *   "Assign To" functionality for Admins.
+    *   Custom Confirmation Dialog for deletion.
+*   **Priority Board**:
+    *   **Drag & Drop** interface to organize tasks by priority (High, Medium, Low).
+    *   Visual color-coding for priority levels.
+*   **Design**:
+    *   **Neo-Brutalism**: High contrast, bold borders, shadows, and vibrant colors using **TailwindCSS**.
+    *   Responsive layout for mobile and desktop.
 
-## React Compiler
+## 🛠 Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Backend
+*   **Node.js & Express**: API server.
+*   **MongoDB & Mongoose**: Database and Object Data Modeling.
+*   **JWT & bcryptjs**: Security and Authentication.
 
-## Expanding the ESLint configuration
+### Frontend
+*   **React (Vite)**: Fast, modern UI development.
+*   **TailwindCSS**: Utility-first styling.
+*   **Context API**: State management for Authentication.
+*   **@hello-pangea/dnd**: Drag and Drop functionality.
+*   **React Router DOM**: Navigation and protected routes.
+*   **React Hot Toast**: Beautiful notifications.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 💻 Setup & Installation
+
+### 1. Prerequisites
+*   Node.js installed.
+*   MongoDB installed and running locally on port `27017`.
+
+### 2. Backend Setup
+```bash
+cd backend
+npm install
+# Create a .env file with:
+# PORT=5000
+# MONGO_URI=mongodb://localhost:27017/task_manager_db
+# JWT_SECRET=your_super_secret_key
+
+npm run dev
+# Server starts on http://localhost:5000
+```
+
+### 3. Frontend Setup
+```bash
+cd frontend
+npm install
+npm run dev
+# App starts on http://localhost:5173
+```
+
+### 4. Creating an Admin User
+To unlock admin features (User Management, Task Assignment), you must create the first admin via API (Postman/cURL):
+**POST** `http://localhost:5000/api/auth/register`
+```json
+{
+  "username": "admin",
+  "email": "admin@test.com",
+  "password": "password123",
+  "role": "admin"
+}
+```
+
+---
+
+## 📸 Screenshots
+*(Add screenshots of your Dashboard and Priority Board here)*
+
+## 📄 License
+MIT
