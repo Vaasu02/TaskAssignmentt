@@ -75,11 +75,3 @@ To unlock admin features (User Management, Task Assignment), you must create the
   "role": "admin"
 }
 ```
-
----
-
-## 📸 Screenshots
-*(Add screenshots of your Dashboard and Priority Board here)*
-
-## 📄 License
-MIT
